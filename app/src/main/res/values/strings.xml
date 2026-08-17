@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">WateR</string>
+    <string name="app_logo_desc">App Logo</string>
+    <string name="title_text">Pacman Water</string>
+    <string name="subtitle_text">Hydrate Yourself My Lad!!</string>
+    <string name="todays_progress">Today\'s Progress</string>
+    <string name="progress_format">%1$d / %2$d ml</string>
+    <string name="sub_250_ml">- 250 ml</string>
+    <string name="add_250_ml">+ 250 ml</string>
+    <string name="custom_ml_hint">Custom ml</string>
+    <string name="add_btn">ADD</string>
+
+    <!-- PHASE 4 STRINGS -->
+    <string name="goal_label">Daily Water Goal (Liters)</string>
+    <string name="goal_hint">e.g. 2.5</string>
+    <string name="update_goal">UPDATE</string>
+    <string name="spydy_reminders">Pacman Reminders</string>
+    <string name="tab_repeat">Repeat</string>
+    <string name="tab_at_time">At Time</string>
+    <string name="hint_interval">Interval (e.g. 2.0 hours)</string>
+    <string name="hint_time">Tap to select time...</string>
+    <string name="btn_add_reminder">ADD REMINDER</string>
+    <string name="active_reminders">Active Reminders</string>
+
+    <!-- MASTER CONTROLS (The missing ones!) -->
+    <string name="activate_reminder">Activate Water Reminder</string>
+    <string name="save_btn">SAVE</string>
+
+    <!-- CALENDAR STRINGS -->
+    <string name="hydration_streak">Your Hydration Streak</string>
+    <string name="tap_to_view">Tap a day to view history</string>
+    <string name="intake_format">You drank %1$d ml out of %2$d ml!</string>
+    <string name="no_water_logged">No water logged on this day.</string>
+
+    <!-- FORMATTING STRINGS -->
+    <string name="repeating_format">Repeating every %1$s hours</string>
+    <string name="specific_time_format">Specific time: %1$s</string>
+    <string name="reminder_card_format">⏳ %1$s</string>
+</resources>
