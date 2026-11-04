@@ -18,4 +18,8 @@ interface WaterDao {
     // Gets all records so we can light up the calendar!
     @Query("SELECT * FROM water_logs")
     suspend fun getAllLogs(): List<WaterLog>
+
+    // Bulk insert for restoring backups
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(logs: List<WaterLog>)
 }

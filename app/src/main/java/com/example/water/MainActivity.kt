@@ -38,6 +38,8 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -55,6 +57,40 @@ class MainActivity : AppCompatActivity() {
                 "Without notification permission, reminders won't show while WateR is locked",
                 Toast.LENGTH_LONG
             ).show()
+        }
+    }
+
+    private val exportBackupLauncher = registerForActivityResult(
+        ActivityResultContracts.CreateDocument("application/json")
+    ) { uri ->
+        uri?.let { destinationUri ->
+            lifecycleScope.launch {
+                // Get a fresh instance of the DB in case it's local in onCreate
+                val db = WaterDatabase.getDatabase(this@MainActivity)
+                val success = BackupManager.exportBackup(this@MainActivity, db.waterDao(), destinationUri)
+                if (success) {
+                    Toast.makeText(this@MainActivity, "Backup saved to device!", Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(this@MainActivity, "Export failed.", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    private val importBackupLauncher = registerForActivityResult(
+        ActivityResultContracts.OpenDocument()
+    ) { uri ->
+        uri?.let { sourceUri ->
+            lifecycleScope.launch {
+                val db = WaterDatabase.getDatabase(this@MainActivity)
+                val success = BackupManager.importBackup(this@MainActivity, db.waterDao(), sourceUri)
+                if (success) {
+                    Toast.makeText(this@MainActivity, "Data restored successfully!", Toast.LENGTH_LONG).show()
+                    // TODO: Call your function here to refresh the calendar UI
+                } else {
+                    Toast.makeText(this@MainActivity, "Failed to restore backup.", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 
@@ -633,5 +669,13 @@ class MainActivity : AppCompatActivity() {
                 pendingIntent
             )
         }
+    }
+
+    fun triggerExport() {
+        exportBackupLauncher.launch("water_backup.json")
+    }
+
+    fun triggerImport() {
+        importBackupLauncher.launch(arrayOf("application/json", "*/*"))
     }
 }
