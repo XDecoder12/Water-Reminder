@@ -24,7 +24,7 @@ class ReminderReceiver : BroadcastReceiver() {
             showMissedNotification(context)
         } else {
             // Phone is UNLOCKED (screen on and in use) -> Show Pacman Animation Only
-            context.startService(Intent(context, SpiderOverlayService::class.java))
+            context.startService(Intent(context, PacmanOverlayService::class.java))
         }
 
         // 3. Reschedule the next alarm — guard against the user having revoked
