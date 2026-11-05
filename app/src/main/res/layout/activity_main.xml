@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="#F8F9FA">
 
-    <!-- NEW: Top App Bar for Settings/Backup -->
+    <!-- Top App Bar for Settings/Backup -->
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
@@ -28,9 +28,9 @@
         android:layout_below="@id/appBarLayout"
         android:layout_above="@id/bottomNavigation">
 
-        <!-- SCREEN 1: HOME -->
-        <!-- (Keep all your existing ScrollView code exactly as it is here) -->
-        <!-- SCREEN 1: HOME -->
+        <!-- ============================== -->
+        <!--        SCREEN 1: HOME          -->
+        <!-- ============================== -->
         <ScrollView
             android:id="@+id/screenHome"
             android:layout_width="match_parent"
@@ -327,7 +327,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical" />
-
                 </LinearLayout>
 
                 <!-- THE MASTER CONTROL SWITCH -->
@@ -356,121 +355,160 @@
             </LinearLayout>
         </ScrollView>
 
-        <!-- SCREEN 2: CALENDAR -->
-        <LinearLayout
+        <!-- ============================== -->
+        <!--      SCREEN 2: CALENDAR        -->
+        <!-- ============================== -->
+        <!-- Now wrapped entirely in a ScrollView -->
+        <ScrollView
             android:id="@+id/screenCalendar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="24dp"
+                android:gravity="top|center_horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/hydration_streak"
+                    android:textColor="#111827"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- Streak Stats Cards -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="20dp"
+                    android:weightSum="2">
+
+                    <!-- Current Streak Card -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:background="@drawable/bg_input_field"
+                        android:padding="16dp"
+                        android:layout_marginEnd="8dp"
+                        android:gravity="center">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Current Streak"
+                            android:textColor="#6B7280"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/currentStreakText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0 🔥"
+                            android:textColor="#F59E0B"
+                            android:textSize="24sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="4dp"/>
+                    </LinearLayout>
+
+                    <!-- Longest Streak Card -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:background="@drawable/bg_input_field"
+                        android:padding="16dp"
+                        android:layout_marginStart="8dp"
+                        android:gravity="center">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Longest Streak"
+                            android:textColor="#6B7280"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/longestStreakText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0 🏆"
+                            android:textColor="#1D4ED8"
+                            android:textSize="24sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="4dp"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <com.applandeo.materialcalendarview.CalendarView
+                    android:id="@+id/streakCalendar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_input_field"
+                    app:headerColor="#DBEAFE"
+                    app:headerLabelColor="#1D4ED8"
+                    app:previousButtonSrc="@android:drawable/ic_media_previous"
+                    app:forwardButtonSrc="@android:drawable/ic_media_next"
+                    app:type="classic" />
+
+                <TextView
+                    android:id="@+id/selectedDayIntakeText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/bg_input_field"
+                    android:padding="16dp"
+                    android:text="@string/tap_to_view"
+                    android:textAlignment="center"
+                    android:textColor="#111827"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="24dp" />
+            </LinearLayout>
+        </ScrollView>
+
+        <!-- ============================== -->
+        <!--      SCREEN 3: HISTORY         -->
+        <!-- ============================== -->
+        <LinearLayout
+            android:id="@+id/screenHistory"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:visibility="gone"
-            android:padding="24dp"
-            android:gravity="top|center_horizontal">
+            android:padding="24dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/hydration_streak"
+                android:text="Hydration History"
                 android:textColor="#111827"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                android:layout_marginTop="20dp"
                 android:layout_marginBottom="16dp" />
 
-            <com.applandeo.materialcalendarview.CalendarView
-                android:id="@+id/streakCalendar"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/historyRecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_input_field"
-                app:headerColor="#DBEAFE"
-                app:headerLabelColor="#1D4ED8"
-                app:previousButtonSrc="@android:drawable/ic_media_previous"
-                app:forwardButtonSrc="@android:drawable/ic_media_next"
-                app:type="classic" />
-
-            <TextView
-                android:id="@+id/selectedDayIntakeText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:background="@drawable/bg_input_field"
-                android:padding="16dp"
-                android:text="@string/tap_to_view"
-                android:textAlignment="center"
-                android:textColor="#111827"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <!-- NEW: Streak Stats Cards -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="20dp"
-            android:weightSum="2">
-
-            <!-- Current Streak Card -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:background="@drawable/bg_input_field"
-                android:padding="16dp"
-                android:layout_marginEnd="8dp"
-                android:gravity="center">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Current Streak"
-                    android:textColor="#6B7280"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/currentStreakText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0 🔥"
-                    android:textColor="#F59E0B"
-                    android:textSize="24sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="4dp"/>
-            </LinearLayout>
-
-            <!-- Longest Streak Card -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:background="@drawable/bg_input_field"
-                android:padding="16dp"
-                android:layout_marginStart="8dp"
-                android:gravity="center">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Longest Streak"
-                    android:textColor="#6B7280"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/longestStreakText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0 🏆"
-                    android:textColor="#1D4ED8"
-                    android:textSize="24sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="4dp"/>
-            </LinearLayout>
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingBottom="80dp"/>
         </LinearLayout>
     </FrameLayout>
 
+    <!-- Bottom Navigation Layer -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
