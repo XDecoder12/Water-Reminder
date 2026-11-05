@@ -36,4 +36,7 @@
     <string name="repeating_format">Repeating every %1$s hours</string>
     <string name="specific_time_format">Specific time: %1$s</string>
     <string name="reminder_card_format">⏳ %1$s</string>
+
+    <string name="menu_export">Export Data (Backup)</string>
+    <string name="menu_import">Import Data (Restore)</string>
 </resources>

@@ -5,11 +5,31 @@
     android:layout_height="match_parent"
     android:background="#F8F9FA">
 
+    <!-- NEW: Top App Bar for Settings/Backup -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:title="WateR"
+            app:titleTextColor="#111827"
+            android:background="#FFFFFF"
+            app:menu="@menu/main_menu" />
+    </com.google.android.material.appbar.AppBarLayout>
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/appBarLayout"
         android:layout_above="@id/bottomNavigation">
 
+        <!-- SCREEN 1: HOME -->
+        <!-- (Keep all your existing ScrollView code exactly as it is here) -->
         <!-- SCREEN 1: HOME -->
         <ScrollView
             android:id="@+id/screenHome"

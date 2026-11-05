@@ -86,7 +86,10 @@ class MainActivity : AppCompatActivity() {
                 val success = BackupManager.importBackup(this@MainActivity, db.waterDao(), sourceUri)
                 if (success) {
                     Toast.makeText(this@MainActivity, "Data restored successfully!", Toast.LENGTH_LONG).show()
-                    // TODO: Call your function here to refresh the calendar UI
+
+                    // Instantly restarts the activity to redraw the calendar with new data
+                    this@MainActivity.recreate()
+
                 } else {
                     Toast.makeText(this@MainActivity, "Failed to restore backup.", Toast.LENGTH_SHORT).show()
                 }
@@ -97,6 +100,22 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // --- NEW: Top App Bar Menu Clicks ---
+        val topAppBar = findViewById<com.google.android.material.appbar.MaterialToolbar>(R.id.topAppBar)
+        topAppBar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.action_export -> {
+                    triggerExport()
+                    true
+                }
+                R.id.action_import -> {
+                    triggerImport()
+                    true
+                }
+                else -> false
+            }
+        }
 
         // --- NEW: Request POST_NOTIFICATIONS at runtime (required on Android 13+) ---
         // Without this, showMissedNotification() in ReminderReceiver silently does
