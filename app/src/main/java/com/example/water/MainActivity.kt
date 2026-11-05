@@ -241,6 +241,7 @@ class MainActivity : AppCompatActivity() {
                 val allLogs = db.waterDao().getAllLogs()
                 val events = mutableListOf<CalendarDay>()
 
+                // 1. Existing calendar visual logic (light up the days)
                 for (log in allLogs) {
                     if (log.goalReached) {
                         val parts = log.date.split("-")
@@ -253,10 +254,50 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                 }
-                withContext(Dispatchers.Main) { streakCalendar.setCalendarDays(events) }
+
+                // 2. NEW: Math for Streaks
+                val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+
+                // Convert dates to Epoch Days (number of days since 1970) for easy math
+                val successfulDates = allLogs.filter { it.goalReached }
+                    .mapNotNull { log -> dateFormat.parse(log.date)?.time?.let { it / (1000 * 60 * 60 * 24) } }
+                    .distinct()
+                    .sorted()
+
+                var currentStreak = 0
+                var longestStreak = 0
+
+                if (successfulDates.isNotEmpty()) {
+                    var tempStreak = 1
+                    longestStreak = 1
+
+                    // Loop through days and count consecutive sequences
+                    for (i in 1 until successfulDates.size) {
+                        if (successfulDates[i] == successfulDates[i - 1] + 1) {
+                            tempStreak++ // Days are back-to-back
+                        } else if (successfulDates[i] > successfulDates[i - 1] + 1) {
+                            if (tempStreak > longestStreak) longestStreak = tempStreak
+                            tempStreak = 1 // Streak broken, reset temp counter
+                        }
+                    }
+                    if (tempStreak > longestStreak) longestStreak = tempStreak
+
+                    // A current streak is only alive if they hit their goal TODAY or YESTERDAY
+                    val todayMillis = dateFormat.parse(todayDate)?.time ?: 0L
+                    val todayDay = todayMillis / (1000 * 60 * 60 * 24)
+                    val lastDate = successfulDates.last()
+
+                    currentStreak = if (lastDate >= todayDay - 1) tempStreak else 0
+                }
+
+                // 3. Update the UI on the Main Thread
+                withContext(Dispatchers.Main) {
+                    streakCalendar.setCalendarDays(events)
+                    findViewById<TextView>(R.id.currentStreakText).text = "$currentStreak 🔥"
+                    findViewById<TextView>(R.id.longestStreakText).text = "$longestStreak 🏆"
+                }
             }
         }
-
         fun updateUI(log: WaterLog?) {
             val currentMl = log?.amountDrankMl ?: 0
             val goalMl = (prefs.getFloat("daily_goal", 2.5f) * 1000).toInt()
